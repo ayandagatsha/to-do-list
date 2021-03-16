@@ -2,7 +2,7 @@ import React from "react";
 
 function App() {
   const [listItem, setListItem] = React.useState();
-  let arrayOfItems = [];
+  const [arrayOfItems, setArray] = React.useState([]);
 
   function listItemSaved(event) {
     const { value, name } = event.target;
@@ -13,9 +13,11 @@ function App() {
   }
 
   function setArrayOfItems() {
-    console.log(listItem);
-    arrayOfItems.push(listItem);
-    console.log(arrayOfItems);
+    setArray((pre) => {
+      return [...pre, listItem];
+    });
+
+    setListItem("");
   }
 
   return (
@@ -24,14 +26,24 @@ function App() {
         <h1>To-Do List</h1>
       </div>
       <div className="form">
-        <input onChange={listItemSaved} type="text" name="listItemName" />
+        <input
+          value={listItem}
+          onChange={listItemSaved}
+          type="text"
+          name="listItemName"
+        />
         <button onClick={setArrayOfItems}>
           <span>Add</span>
         </button>
       </div>
       <div>
         <ul>
-          <li>{arrayOfItems}</li>
+          {/* {arrayOfItems.forEach(function (item) {
+            <li>{item}</li>;
+          })} */}
+          {arrayOfItems.map((item) => (
+            <li>{item}</li>
+          ))}
         </ul>
       </div>
     </div>
